@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="piSenseApp">
+<head>
+	<title>Weather</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- STYLES -->
+	<link href="static/styles.css" rel="stylesheet" type="text/css">
+	<link href="static/c3/c3.css" rel="stylesheet" type="text/css">
+
+	<!-- SCRIPTS -->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js" ></script>
+
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script type="text/javascript" src="static/c3/c3.min.js"></script>
+
+	<script type="text/javascript" src="static/app.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-static-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">PI Sense</a>
+			<div>
+		</div>
+	</nav>
+
+	<div class="container-fluid main" ng-controller="DashboardController" ng-init="controller.Init()">
+		<h1 class="page-header">
+			Current temperature: <span id="currentTemperature" ng-hide="{{controller.showSpinner}}"> {{ controller.temperature }} &#x2103;</span> 
+			<div class="loader"  ng-show="{{controller.showSpinner}}"></div>
+		</h1>
+		<div class="row">
+			<div class="col-sm-6 col-xs-12 col-md-6">
+				<label>Time range:</label>
+				<button href="#" class="btn btn-default btn-xs" ng-class="{'btn-primary': controller.daysRange == '1'}"
+					ng-click="controller.UpdateDaysRange('1')">24h</button>
+				<button href="#" class="btn btn-default btn-xs" ng-class="{'btn-primary': controller.daysRange == '7'}"
+					ng-click="controller.UpdateDaysRange('7')">Week</button>
+				<button href="#" class="btn btn-default btn-xs" ng-class="{'btn-primary': controller.daysRange == '14'}"
+					ng-click="controller.UpdateDaysRange('14')">2 weeks</button>
+				<button href="#" class="btn btn-default btn-xs" ng-class="{'btn-primary': controller.daysRange == '30'}"
+					ng-click="controller.UpdateDaysRange('30')">30 days</button>
+			</div>
+			<div class="col-sm-6 col-xs-12 col-md-6">
+				<label>Sampling:</label>
+				<button href="#" class="btn btn-default btn-xs" ng-class="{'btn-primary': controller.sampling == '15T'}"
+					ng-click="controller.UpdateResolution('15T')">15 min</button>
+				<button href="#" class="btn btn-default btn-xs" ng-class="{'btn-primary': controller.sampling == '1H'}"
+					ng-click="controller.UpdateResolution('1H')">1 hour</button>
+				<button href="#" class="btn btn-default btn-xs" ng-class="{'btn-primary': controller.sampling == '1D'}"
+					ng-click="controller.UpdateResolution('1D')">1 day</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-12 col-lg-4">
+				<h3>Temperature</h3>
+				<div  id="temperatureChart">
+					<div class="loader-big"></div>
+				</div>
+			</div>
+			<div class="clearfix visible-xs-block"></div>
+			<div class="col-xs-12 col-md-6 col-lg-4">
+				<h3>Pressure</h3>
+				<div id="pressureChart">
+					<div class="loader-big"></div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-6 col-lg-4">
+				<h3>Humidity</h3>
+				<div id="humidityChart">
+					<div class="loader-big"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
